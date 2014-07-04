@@ -1,0 +1,71 @@
+# depslib dependency file v1.0
+1403158604 source:/home/chenxiaodong/workspace/test/client/client.cpp
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<string.h>
+	<iostream>
+
+1404368970 source:/home/chenxiaodong/workspace/test/socket/client/client.cpp
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<string.h>
+	<iostream>
+	<pthread.h>
+	<list>
+	"../common/tinyxml/tinyxml.h"
+	"../common/Common.h"
+	"../common/MessageTag.h"
+
+1403164795 /home/chenxiaodong/workspace/test/socket/common/tinyxml/tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1305426297 /home/chenxiaodong/workspace/test/socket/common/tinyxml/tinystr.h
+	<assert.h>
+	<string.h>
+
+1403833252 /home/chenxiaodong/workspace/test/socket/common/Common.h
+
+1404368027 /home/chenxiaodong/workspace/test/socket/common/MessageTag.h
+
+1403167070 source:/home/chenxiaodong/workspace/test/socket/common/MessageTag.cpp
+	<iostream>
+	"MessageTag.h"
+
+1305426297 source:/home/chenxiaodong/workspace/test/socket/common/tinyxml/tinystr.cpp
+	"tinystr.h"
+
+1403164806 source:/home/chenxiaodong/workspace/test/socket/common/tinyxml/tinyxml.cpp
+	<ctype.h>
+	<sstream>
+	<iostream>
+	"tinyxml.h"
+
+1305426297 source:/home/chenxiaodong/workspace/test/socket/common/tinyxml/tinyxmlerror.cpp
+	"tinyxml.h"
+
+1305426297 source:/home/chenxiaodong/workspace/test/socket/common/tinyxml/tinyxmlparser.cpp
+	<ctype.h>
+	<stddef.h>
+	"tinyxml.h"
+	<windows.h>
+
+1403488114 source:/home/chenxiaodong/workspace/test/socket/common/helper.cpp
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="client.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="3101" topLine="66" />
+	</File>
+	<File name="../common/Common.h" open="1" top="0" tabpos="0">
+		<Cursor position="58" topLine="0" />
+	</File>
+	<File name="../common/MessageTag.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="65" topLine="0" />
+	</File>
+	<File name="../common/MessageTag.h" open="1" top="0" tabpos="0">
+		<Cursor position="441" topLine="0" />
+	</File>
+	<File name="../common/helper.cpp" open="1" top="0" tabpos="0">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="../common/helper.h" open="1" top="0" tabpos="1">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="../common/tinyxml/tinystr.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="691" topLine="0" />
+	</File>
+	<File name="../common/tinyxml/tinyxml.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="11412" topLine="556" />
+	</File>
+	<File name="../common/tinyxml/tinyxml.h" open="0" top="0" tabpos="0">
+		<Cursor position="2627" topLine="492" />
+	</File>
+	<File name="../common/tinyxml/tinyxmlerror.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1443" topLine="11" />
+	</File>
+	<File name="../common/tinyxml/tinyxmlparser.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="36538" topLine="1584" />
+	</File>
+</CodeBlocks_layout_file>
