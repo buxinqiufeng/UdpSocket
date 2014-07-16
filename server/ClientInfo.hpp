@@ -12,13 +12,10 @@ struct ClientInfo
 		Stop
 	};
 	string id;
-	string password;
 	string ip;
 	string port;
 	string userName;
-	string loginPassword;
 	Status status;
-	int socket;
 
 
     ClientInfo()
@@ -30,34 +27,36 @@ struct ClientInfo
         if(this != &c)
         {
             id = c.id;
-            password = c.password;
             ip = c.ip;
             port = c.port;
             userName = c.userName;
-            loginPassword = c.loginPassword;
             status = c.status;
-            socket = c.socket;
         }
 	return *this;
 	}
 	bool operator==(const ClientInfo& c)
 	{
         if(id == c.id
-            && password == c.password
             && ip == c.ip
             && port == c.port
             && userName == c.userName
-            && loginPassword == c.loginPassword
-            && status == c.status
-            && socket == c.socket)
+            && status == c.status)
         {
             return true;
         }
         return false;
     }
-	void dump()
+	string dump()
 	{
-        cout << "Client Information: " << userName << " " << password << " " << ip << " " << port << " status=" << status<< endl;
+        string info;
+        info = userName;
+        info += "(";
+        info += ip;
+        info += ":";
+        info += port;
+        info += ") status=";
+        info += status;
+        return info;
     }
 };
 #endif

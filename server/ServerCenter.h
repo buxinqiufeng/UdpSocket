@@ -5,6 +5,7 @@
 using namespace std;
 #include <time.h>
 #include "UdpServer.h"
+#include "../common/Message/Message.h"
 
 class ServerCenter:public UdpServer
 {
@@ -33,6 +34,18 @@ private:
                }
                return false;
         }
+        string dump()
+        {
+            string info = UserName;
+            info += "(";
+            info += Ip;
+            info += ":";
+            info += Port;
+            info +=")";
+            info +=" State=";
+            info +=State;
+            return info;
+        }
         int Fd;
         string Ip;
         string Port;
@@ -52,11 +65,12 @@ public:
 private:
     void AddClient(const ClientInfo& client);
     ClientInfo* GetClientByFd(const int fd);
+    ClientInfo* GetClientByAddress(const string ip, const string port);
     void DeleteClientByFd(const int fd);
 
-    bool HandleLoginMsg(const string msg, int fd);
+    bool HandleLoginMsg(Message& msg, int fd);
     bool VerifyUserLogin(string name, string pw);
-    bool HandleChatMsg(const string msg, int fd);
+    bool HandleChatMsg(Message& msg, int fd);
 
     virtual void OnClientConnect(string ip, string port, int socket);
     virtual void OnReceiveMessage(const string msg, const int socket, const int time);

@@ -59,3 +59,27 @@ namespace MessageTag{
 }
 
 #endif
+
+/*Message define
+Login:
+Type:Login
+UserName:
+Password:
+
+Chat:
+Type:Chat
+UserName: --  user to receive message.
+Content:
+*/
+
+
+
+
+
+
+
+
+
+
+
+

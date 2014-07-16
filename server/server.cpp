@@ -338,7 +338,7 @@ bool parseCmd(char *cmd, ClientInfo& c, int &mode)
 
 int main()
 {
-    ServerCenter sc(10000);
+    ServerCenter sc(port_num);
     sc.Start();
     while(1)
     {

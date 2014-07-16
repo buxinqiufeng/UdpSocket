@@ -50,11 +50,11 @@ void ServerCenter::OnReceiveMessage(const string msg, const int socket, const in
 
     if(MessageTag::TypeLogin == type)
     {
-        HandleLoginMsg(msg, socket);
+        HandleLoginMsg(message, socket);
     }
     else if(MessageTag::TypeChat == type)
     {
-        HandleChatMsg(msg, socket);
+        HandleChatMsg(message, socket);
     }
     else if(MessageTag::TypeLogout == type)
     {
@@ -71,8 +71,12 @@ void ServerCenter::OnClientDisconnect(int socket)
     DeleteClientByFd(socket);
 }
 
-bool ServerCenter::HandleLoginMsg(const string msg, int fd)
+bool ServerCenter::HandleLoginMsg(Message& msg, int fd)
 {
+    if(MessageTag::TypeLogin == msg.GetMessageType())
+    {
+        return false;
+    }
     ClientInfo *client = GetClientByFd(fd);
     if(null != client || Connected != client->State)
     {
@@ -80,12 +84,17 @@ bool ServerCenter::HandleLoginMsg(const string msg, int fd)
         return false;
     }
 
-    if(!VerifyUserLogin(client->UserName, client->Password))
+    string username = msg.GetValue(MessageTag::UserName);
+    string password = msg.GetValue(MessageTag::Password);
+    if(!VerifyUserLogin(username, password))
     {
         cout << client->UserName << " Login failed for wrong password." << endl;
     }
 
+    client->UserName = username;
+    client->Password = password;
     client->State = Logined;
+    cout << "New user Login:" << endl << client->dump() << endl;
 
     //login response.
     Message message;
@@ -98,9 +107,28 @@ bool ServerCenter::HandleLoginMsg(const string msg, int fd)
     return true;
 }
 
-bool ServerCenter::HandleChatMsg(const string msg, int fd)
+bool ServerCenter::HandleChatMsg(Message& msg, int fd)
 {
-    return false;
+    if(MessageTag::TypeChat == msg.GetMessageType())
+    {
+        return false;
+    }
+    ClientInfo *to = GetClientByAddress(msg.GetValue(MessageTag::Ip), msg.GetValue(MessageTag::Port));
+    ClientInfo *from = GetClientByFd(fd);
+    if(null == to)
+    {
+        cerr << "Message from " << from->UserName << " to unknown user, discard it." << endl;
+    }
+
+    //send message to enduser.
+    Message newMsg = msg;
+    newMsg.SetValue(MessageTag::Ip, from->Ip);
+    newMsg.SetValue(MessageTag::Port, from->Port);
+    if(!SendData(newMsg.GenerateMessage(), to->Fd))
+    {
+        return false;
+    }
+    return true;
 }
 
 void ServerCenter::AddClient(const ClientInfo& client)
@@ -125,6 +153,19 @@ ServerCenter::ClientInfo* ServerCenter::GetClientByFd(const int fd)
 	return null;
 }
 
+ServerCenter::ClientInfo* ServerCenter::GetClientByAddress(const string ip, const string port)
+{
+    list<ClientInfo>::iterator it;
+	for(it=mClist.begin(); it!=mClist.end(); it++)
+	{
+		if(it->Ip == ip && it->Port == port)
+		{
+			return &(*it);
+		}
+	}
+	return null;
+}
+
 void ServerCenter::DeleteClientByFd(const int fd)
 {
     list<ClientInfo>::iterator it;
@@ -140,4 +181,9 @@ void ServerCenter::DeleteClientByFd(const int fd)
 bool ServerCenter::VerifyUserLogin(string name, string pw)
 {
     return true;
+}
+
+void SetOutStream(ostream os)
+{
+
 }

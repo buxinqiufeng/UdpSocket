@@ -14,7 +14,7 @@ using namespace std;
 
 #include "../common/tinyxml/tinyxml.h"
 #include "../common/Common.h"
-#include "../common/MessageTag.h"
+#include "../common/Message/Message.h"
 
 const char default_server_addr[]="127.0.0.1";
 const unsigned short port_num = 0x8888;
@@ -22,6 +22,7 @@ const unsigned short port_num = 0x8888;
 list<string> gDataList;
 pthread_mutex_t gMutex;
 
+void Usage();
 bool ParseArgs(int argc, char **argv, char *server, char *username, char *password, int &mode);
 bool Login(int serverSocket);
 bool Sync(int serverSocket);
@@ -44,6 +45,7 @@ int main(int argc, char **argv)
 	if(!ParseArgs(argc, argv, server, username, password, mode))
 	{
 		cout << "error parse args" << endl;
+		Usage();
 		return -1;
 	}
  	if(DEBUG) cout<<"server:"<<server<<",username:"<<username<<",password:"<<password<<",mode:"<<mode<<endl;
