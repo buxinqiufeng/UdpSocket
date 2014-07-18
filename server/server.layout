@@ -4,6 +4,12 @@
 	<File name="../common/Common.h" open="0" top="0" tabpos="9">
 		<Cursor position="83" topLine="0" />
 	</File>
+	<File name="../common/Message/Message.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="430" topLine="0" />
+	</File>
+	<File name="../common/Message/Message.h" open="0" top="0" tabpos="0">
+		<Cursor position="1537" topLine="36" />
+	</File>
 	<File name="../common/MessageTag.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="26" topLine="0" />
 	</File>
@@ -17,7 +23,7 @@
 		<Cursor position="6429" topLine="234" />
 	</File>
 	<File name="../common/tinyxml/tinyxml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="11608" topLine="574" />
+		<Cursor position="30854" topLine="1485" />
 	</File>
 	<File name="../common/tinyxml/tinyxml.h" open="0" top="0" tabpos="2">
 		<Cursor position="38104" topLine="1020" />
@@ -29,21 +35,21 @@
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="ClientInfo.hpp" open="0" top="0" tabpos="2">
-		<Cursor position="279" topLine="0" />
+		<Cursor position="57" topLine="0" />
 	</File>
-	<File name="ClientList.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="426" topLine="12" />
+	<File name="ServerCenter.cpp" open="1" top="1" tabpos="7">
+		<Cursor position="902" topLine="32" />
 	</File>
-	<File name="ClientList.h" open="1" top="0" tabpos="4">
-		<Cursor position="256" topLine="0" />
+	<File name="ServerCenter.h" open="1" top="0" tabpos="8">
+		<Cursor position="1346" topLine="48" />
 	</File>
-	<File name="UdpServer.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="3736" topLine="129" />
+	<File name="UdpServer.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="6291" topLine="188" />
 	</File>
-	<File name="UdpServer.h" open="1" top="0" tabpos="5">
-		<Cursor position="1170" topLine="9" />
+	<File name="UdpServer.h" open="1" top="0" tabpos="6">
+		<Cursor position="112" topLine="6" />
 	</File>
-	<File name="server.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="298" topLine="0" />
+	<File name="server.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="8359" topLine="322" />
 	</File>
 </CodeBlocks_layout_file>

@@ -30,9 +30,6 @@
 				<Linker>
 					<Add option="-s" />
 				</Linker>
-				<Linker>
-					<Add option="-lpthread" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
@@ -40,6 +37,8 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="../common/Common.h" />
+		<Unit filename="../common/Message/Message.cpp" />
+		<Unit filename="../common/Message/Message.h" />
 		<Unit filename="../common/MessageTag.cpp" />
 		<Unit filename="../common/MessageTag.h" />
 		<Unit filename="../common/helper.cpp" />
@@ -51,8 +50,8 @@
 		<Unit filename="../common/tinyxml/tinyxmlerror.cpp" />
 		<Unit filename="../common/tinyxml/tinyxmlparser.cpp" />
 		<Unit filename="ClientInfo.hpp" />
-		<Unit filename="ClientList.cpp" />
-		<Unit filename="ClientList.h" />
+		<Unit filename="ServerCenter.cpp" />
+		<Unit filename="ServerCenter.h" />
 		<Unit filename="UdpServer.cpp" />
 		<Unit filename="UdpServer.h" />
 		<Unit filename="server.cpp" />

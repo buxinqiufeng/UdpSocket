@@ -36,7 +36,7 @@ void ServerCenter::Stop()
 
 void ServerCenter::OnClientConnect(string ip, string port, int socket)
 {
-    AddClient(ClientInfo(ip, port, socket));
+    AddClient(ClientInfo(ip, port, socket, CIS_Connected));
 }
 
 void ServerCenter::OnReceiveMessage(const string msg, const int socket, const int time)
@@ -47,10 +47,14 @@ void ServerCenter::OnReceiveMessage(const string msg, const int socket, const in
         cout << "Message parase failed:" << msg << endl;
     }
     const string type = message.GetMessageType();
-
-    if(MessageTag::TypeLogin == type)
+    cout << "Message type=(" << type << "), login type is(" << MessageTag::TypeLogin << ")\n";
+    if(type == MessageTag::TypeLogin)
     {
         HandleLoginMsg(message, socket);
+    }
+    else if(MessageTag::TypeSync == type)
+    {
+
     }
     else if(MessageTag::TypeChat == type)
     {
@@ -73,14 +77,11 @@ void ServerCenter::OnClientDisconnect(int socket)
 
 bool ServerCenter::HandleLoginMsg(Message& msg, int fd)
 {
-    if(MessageTag::TypeLogin == msg.GetMessageType())
-    {
-        return false;
-    }
+    bool verifySucess = false;
     ClientInfo *client = GetClientByFd(fd);
-    if(null != client || Connected != client->State)
+    if(null == client || CIS_Connected != client->State)
     {
-        cout << "Invalid message received, discard it." << endl;
+        cout << "Client state invalid, discard message." << endl;
         return false;
     }
 
@@ -88,18 +89,24 @@ bool ServerCenter::HandleLoginMsg(Message& msg, int fd)
     string password = msg.GetValue(MessageTag::Password);
     if(!VerifyUserLogin(username, password))
     {
+        verifySucess = false;
         cout << client->UserName << " Login failed for wrong password." << endl;
     }
-
-    client->UserName = username;
-    client->Password = password;
-    client->State = Logined;
-    cout << "New user Login:" << endl << client->dump() << endl;
+    else
+    {
+        verifySucess = true;
+        client->UserName = username;
+        client->Password = password;
+        client->State = CIS_Logined;
+        cout << "New user Login:" << endl << client->dump() << endl;
+    }
 
     //login response.
     Message message;
+    string strErr;
+    verifySucess ? strErr="0" : strErr = "-1";
     message.SetMessageType(MessageTag::TypeLogin);
-    message.SetValue(MessageTag::ErrorCode, "0");
+    message.SetValue(MessageTag::ErrorCode, strErr);
     if(!SendData(message.GenerateMessage(), fd))
     {
         return false;
@@ -107,12 +114,54 @@ bool ServerCenter::HandleLoginMsg(Message& msg, int fd)
     return true;
 }
 
+bool ServerCenter::HandleSyncMsg(Message& msg, int fd)
+{
+    list<ClientInfo>::iterator it;
+	for(it=mClist.begin(); it!=mClist.end(); it++)
+	{
+		if(it->Fd == fd)
+            continue;
+
+        Message msg;
+        msg.SetMessageType(MessageTag::TypeSync);
+        msg.SetValue(MessageTag::UserName, it->UserName);
+        msg.SetValue(MessageTag::Ip, it->Ip);
+        msg.SetValue(MessageTag::Port, it->Port);
+        msg.SetValue(MessageTag::Status, ConventStateToString(it->State));
+        SendData(msg.GenerateMessage(), fd);
+	}
+
+	//send sync end message.
+	{
+        Message msg;
+        msg.SetMessageType(MessageTag::TypeSyncEnd);
+        SendData(msg.GenerateMessage(), fd);
+	}
+	return true;
+}
+
+string ServerCenter::ConventStateToString(ClientInfoStatus cis)
+{
+    string strState;
+    switch(cis)
+    {
+     case CIS_Invalid:
+        strState = "0";
+        break;
+    case CIS_Connected:
+        strState = "1";
+    case CIS_Logined:
+        strState = "2";
+    case CIS_Logout:
+        strState = "3";
+    default:
+        strState = "-1";
+    }
+    return strState;
+}
+
 bool ServerCenter::HandleChatMsg(Message& msg, int fd)
 {
-    if(MessageTag::TypeChat == msg.GetMessageType())
-    {
-        return false;
-    }
     ClientInfo *to = GetClientByAddress(msg.GetValue(MessageTag::Ip), msg.GetValue(MessageTag::Port));
     ClientInfo *from = GetClientByFd(fd);
     if(null == to)
@@ -129,6 +178,24 @@ bool ServerCenter::HandleChatMsg(Message& msg, int fd)
         return false;
     }
     return true;
+}
+
+void ServerCenter::ClientLoginNotify(ClientInfo &ci)
+{
+    list<ClientInfo>::iterator it;
+	for(it=mClist.begin(); it!=mClist.end(); it++)
+	{
+		if(it->Fd == ci.Fd)
+            continue;
+
+		Message msg;
+        msg.SetMessageType(MessageTag::TypeSync);
+        msg.SetValue(MessageTag::UserName, it->UserName);
+        msg.SetValue(MessageTag::Ip, it->Ip);
+        msg.SetValue(MessageTag::Port, it->Port);
+        msg.SetValue(MessageTag::Status, ConventStateToString(it->State));
+        SendData(msg.GenerateMessage(), ci.Fd);
+	}
 }
 
 void ServerCenter::AddClient(const ClientInfo& client)
@@ -183,7 +250,15 @@ bool ServerCenter::VerifyUserLogin(string name, string pw)
     return true;
 }
 
-void SetOutStream(ostream os)
+void ServerCenter::Dump()
 {
-
+    cout << "*******************************************" << endl;
+    cout << "Server is running. there are " << mClist.size() << "client online." << endl;
+    list<ClientInfo>::iterator it;
+    int i=0;
+	for(it=mClist.begin(); it!=mClist.end(); it++)
+	{
+		cout << i++ << " . " << it->dump() << endl;
+	}
+    cout << "*******************************************" << endl;
 }

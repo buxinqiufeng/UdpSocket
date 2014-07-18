@@ -81,6 +81,7 @@ bool UdpServer::SendData(const string &data, int socket)
         return false;
     }
 
+    if(DEBUG) cout << "Send Data : " << data << endl;
     int res = send(socket, data.c_str(), data.length()+1, 0);
     if(-1 == res)
     {
@@ -136,7 +137,7 @@ void * UdpServer::AcceptThread(void * pParam)
                 cout << "accept error." << endl;
                 continue;
             }
-
+            if(DEBUG) cout << "Accept new client : " << clientSoc << endl;
             pThis->mCliList.push_front(clientSoc);
 
             string ip = inet_ntoa(cliAddr.sin_addr);
@@ -158,6 +159,7 @@ void * UdpServer::AcceptThread(void * pParam)
                 int res = recv(*itor, buf, sizeof(buf), 0);
                 if(0 < res)
                 {
+                    if(DEBUG) cout << "Receive data : " << buf << endl;
                     pthread_mutex_lock(&pThis->mMutex);
                     pThis->mDataList.push_back(MsgInfo(*itor, buf));
                     pthread_mutex_unlock(&pThis->mMutex);

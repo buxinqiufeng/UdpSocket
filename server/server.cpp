@@ -342,7 +342,13 @@ int main()
     sc.Start();
     while(1)
     {
-        sleep(1000);
+        string cmd;
+        string cmdList = "list";
+        cin >> cmd;
+        if(cmdList == cmd)
+        {
+            sc.Dump();
+        }
     }
 }
 

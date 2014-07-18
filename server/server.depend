@@ -210,7 +210,7 @@
 	<memory>
 	"ClientInfo.hpp"
 
-1403835131 /home/chenxiaodong/workspace/test/github/UdpSocket/server/ClientInfo.hpp
+1405498112 /home/chenxiaodong/workspace/test/github/UdpSocket/server/ClientInfo.hpp
 
 1404461454 source:/home/chenxiaodong/workspace/test/github/UdpSocket/server/UdpServer.cpp
 	<arpa/inet.h>
@@ -227,7 +227,7 @@
 
 1404374421 /home/chenxiaodong/workspace/test/github/UdpSocket/common/Common.h
 
-1404461426 source:/home/chenxiaodong/workspace/test/github/UdpSocket/server/server.cpp
+1405664005 source:/home/chenxiaodong/workspace/test/github/UdpSocket/server/server.cpp
 	<stdlib.h>
 	<sys/types.h>
 	<stdio.h>
@@ -243,14 +243,22 @@
 	"../common/Message/Message.h"
 	"ServerCenter.h"
 
-1404459862 /home/chenxiaodong/workspace/test/github/UdpSocket/common/Message/Message.h
+1405648473 /home/chenxiaodong/workspace/test/github/UdpSocket/common/Message/Message.h
 	<string>
 	"../tinyxml/tinyxml.h"
 	"../Common.h"
 
-1404461529 /home/chenxiaodong/workspace/test/github/UdpSocket/server/ServerCenter.h
+1405663448 /home/chenxiaodong/workspace/test/github/UdpSocket/server/ServerCenter.h
 	<iostream>
 	<list>
 	<time.h>
 	"UdpServer.h"
+	"../common/Message/Message.h"
+
+1404458350 source:/home/chenxiaodong/workspace/test/github/UdpSocket/common/Message/Message.cpp
+	"Message.h"
+
+1405664566 source:/home/chenxiaodong/workspace/test/github/UdpSocket/server/ServerCenter.cpp
+	"ServerCenter.h"
+	"../common/Message/Message.h"
 

@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="client.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="3101" topLine="66" />
+	<File name="ClientCenter.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="3790" topLine="165" />
+	</File>
+	<File name="ClientCenter.h" open="1" top="0" tabpos="1">
+		<Cursor position="2132" topLine="32" />
+	</File>
+	<File name="UdpClient.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="1952" topLine="30" />
+	</File>
+	<File name="UdpClient.h" open="0" top="0" tabpos="0">
+		<Cursor position="545" topLine="4" />
+	</File>
+	<File name="client.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="4245" topLine="0" />
 	</File>
 	<File name="../common/Common.h" open="1" top="0" tabpos="0">
 		<Cursor position="58" topLine="0" />
@@ -13,10 +25,7 @@
 	<File name="../common/MessageTag.h" open="1" top="0" tabpos="0">
 		<Cursor position="441" topLine="0" />
 	</File>
-	<File name="../common/helper.cpp" open="1" top="0" tabpos="0">
-		<Cursor position="0" topLine="0" />
-	</File>
-	<File name="../common/helper.h" open="1" top="0" tabpos="1">
+	<File name="../common/helper.h" open="0" top="0" tabpos="1">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="../common/tinyxml/tinystr.cpp" open="0" top="0" tabpos="0">

@@ -1,7 +1,7 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#define DEBUG 0
+#define DEBUG 1
 
 #define MAX_MESSAGE_LEN 548
 

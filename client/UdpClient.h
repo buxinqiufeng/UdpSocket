@@ -14,15 +14,19 @@ class UdpClient
 {
 public:
     UdpClient();
-    bool Initialize(const string ip, const int port);
+    ~UdpClient();
     void SetCustomHandler(unsigned long connectHdlr, unsigned long msgHdlr, unsigned long disconnectHdlr);
     bool SendData(const string &data);
+    void Disconnect();
 
+protected:
+    bool Initialize(const string ip, const int port);
     virtual void OnConnected(){};
     virtual void OnDisconnect(){};
     virtual void OnRecvMessage(const string msg){};
 
 private:
+    void DeInit();
     static void *RecvThread(void * pParam);
     static void *DataThread(void * pParam);
 private:
@@ -34,9 +38,12 @@ private:
     pthread_mutex_t mMutex;
     pthread_t mRecvThread;
     pthread_t mDataThread;
+    bool mIsRecvThreadRunning;
+    bool mIsDataThreadRunnung;
 
     list<string> mDataList;
     int mMaxMsgLen;
+    bool mIsConnecting;
 };
 
 #endif

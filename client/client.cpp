@@ -15,10 +15,33 @@ using namespace std;
 #include "../common/tinyxml/tinyxml.h"
 #include "../common/Common.h"
 #include "../common/Message/Message.h"
+#include "ClientCenter.h"
 
-const char default_server_addr[]="127.0.0.1";
-const unsigned short port_num = 0x8888;
+const string default_server_addr="127.0.0.1";
+const int port_num = 0x8888;
 
+
+int main()
+{
+    ClientCenter cc;
+    const string name="username";
+    const string password = "password";
+    cc.Start(default_server_addr, port_num);
+    cc.Login(name, password);
+    while(1)
+    {
+        string cmd;
+        const string cmdList = "list";
+        cin >> cmd;
+        if(cmdList == cmd)
+        {
+            cc.Dump();
+        }
+    }
+}
+
+
+/*
 list<string> gDataList;
 pthread_mutex_t gMutex;
 
@@ -292,6 +315,7 @@ void Usage()
 		<< "-m : connect mode, 0 login, 1 connect to other client." << endl
 		<< "-s : server address, if not set, use default server."  << endl;
 }
+*/
 
 
 

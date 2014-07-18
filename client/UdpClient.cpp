@@ -21,7 +21,10 @@ UdpClient::UdpClient()
     mRecvThread = 0;
     mDataThread = 0;
     mDataList.empty();
-    mMaxMsgLen = 1024;
+    mMaxMsgLen = MAX_MESSAGE_LEN;
+    mIsConnecting = false;
+    mIsRecvThreadRunning = false;
+    mIsDataThreadRunnung = false;
 }
 
 bool UdpClient::Initialize(const string ip, const int port)
@@ -45,13 +48,15 @@ bool UdpClient::Initialize(const string ip, const int port)
     }
     if(null != mConnectHdlr) mConnectHdlr();
     OnConnected();
+    mIsConnecting = true;
 
 
-    if(0 != pthread_create(&mRecvThread, NULL, RecvThread, this))
+    if((0 != pthread_create(&mRecvThread, NULL, RecvThread, this))
+       || (0 != pthread_create(&mDataThread, NULL, RecvThread, this)))
+    {
+        mIsConnecting = false;
         return false;
-
-    if(0 != pthread_create(&mDataThread, NULL, RecvThread, this))
-        return false;
+    }
 
     return true;
 }
@@ -65,7 +70,16 @@ void UdpClient::SetCustomHandler(unsigned long connectHdlr, unsigned long msgHdl
 
 bool UdpClient::SendData(const string &data)
 {
-    return false;
+    if(null == mSocketFd) return false;
+
+    if(DEBUG) cout << "Send data : " << data << endl;
+    int res = send(mSocketFd, data.c_str(), data.length()+1, 0);
+    if(-1 == res)
+    {
+        cerr << "send error." << endl;
+        return false;
+    }
+    return true;
 }
 
 void *UdpClient::RecvThread(void * pParam)
@@ -75,37 +89,49 @@ void *UdpClient::RecvThread(void * pParam)
     UdpClient *pThis = (UdpClient*)pParam;
     char *tmpBuf = new char(pThis->mMaxMsgLen);
 
-    int res = recv(pThis->mSocketFd, tmpBuf, pThis->mMaxMsgLen, 0);
-    if(0 < res)
+    pThis->mIsRecvThreadRunning = true;
+    while(1)
     {
-        pthread_mutex_lock(&pThis->mMutex);
-        string tmp = tmpBuf;
-        pThis->mDataList.push_back(tmp);
-        pthread_mutex_unlock(&pThis->mMutex);
-    }
-    else if(0 == res)
-    {
-        cerr << "lost connect" << endl;
-        pthread_mutex_lock(&pThis->mMutex);
-        pThis->OnDisconnect();
-        pthread_mutex_unlock(&pThis->mMutex);
-    }
-    else
-    {
-        cerr << "receive failed." << endl;
-    }
+        int res = recv(pThis->mSocketFd, tmpBuf, pThis->mMaxMsgLen, 0);
+        if(0 < res)
+        {
+            if(DEBUG) cout << "Receive data : " << tmpBuf << endl;
+            pthread_mutex_lock(&pThis->mMutex);
+            string tmp = tmpBuf;
+            pThis->mDataList.push_back(tmp);
+            pthread_mutex_unlock(&pThis->mMutex);
+        }
+        else if(0 == res)
+        {
+            cerr << "lost connect" << endl;
+            pthread_mutex_lock(&pThis->mMutex);
+            pThis->OnDisconnect();
+            pThis->mIsConnecting = false;
+            pthread_mutex_unlock(&pThis->mMutex);
+            break;
+        }
+        else
+        {
+            cerr << "receive failed." << endl;
+        }
 
-    delete tmpBuf;
-    return 0;
+        delete tmpBuf;
+    }
+    pThis->mIsRecvThreadRunning = false;
+    return null;
 }
 
 void *UdpClient::DataThread(void * pParam)
 {
-    if(null == pParam) return 0;
+    if(null == pParam) return null;
 
     UdpClient *pThis = (UdpClient*)pParam;
+
+    pThis->mIsDataThreadRunnung = true;
     while(1)
     {
+        if(!pThis->mIsConnecting)
+            break;
         if(!pThis->mDataList.empty())
         {
             pthread_mutex_lock(&pThis->mMutex);
@@ -117,6 +143,42 @@ void *UdpClient::DataThread(void * pParam)
         }
         usleep(100);
     }
+
+    pThis->mIsDataThreadRunnung = false;
+    return null;
+}
+
+void UdpClient::Disconnect()
+{
+    DeInit();
+}
+
+UdpClient::~UdpClient()
+{
+    DeInit();
+}
+
+void UdpClient::DeInit()
+{
+    mDataList.empty();
+    mIsConnecting = false;
+    mDisconHdlr = null;
+    mMsgHdlr = null;
+    mConnectHdlr = null;
+    close(mSocketFd);
+    usleep(100);//wait for thread terminted.
+    if(mIsRecvThreadRunning)
+    {
+        pthread_cancel(mRecvThread);
+        mIsRecvThreadRunning = false;
+    }
+    if(mIsDataThreadRunnung)
+    {
+        pthread_cancel(mDataThread);
+        mIsDataThreadRunnung = false;
+    }
+    mRecvThread = null;
+    mDataThread = null;
 }
 
 

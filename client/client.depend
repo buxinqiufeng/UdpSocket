@@ -71,3 +71,98 @@
 
 1405497469 source:/home/chenxiaodong/workspace/test/github/UdpSocket/client/ClientCenter.cpp
 
+1405667360 source:/home/chenxiaodong/workspace/test/github/UdpSocket/client/UdpClient.cpp
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<unistd.h>
+	<string.h>
+	<iostream>
+	<list>
+	"../common/Common.h"
+	"UdpClient.h"
+
+1405665848 /home/chenxiaodong/workspace/test/github/UdpSocket/common/Common.h
+
+1405664297 /home/chenxiaodong/workspace/test/github/UdpSocket/client/UdpClient.h
+	<iostream>
+	<list>
+	<pthread.h>
+	"ClientInfo.hpp"
+
+1403835131 /home/chenxiaodong/workspace/test/github/UdpSocket/client/ClientInfo.hpp
+
+1405667525 source:/home/chenxiaodong/workspace/test/github/UdpSocket/client/client.cpp
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<string.h>
+	<iostream>
+	<pthread.h>
+	<list>
+	"../common/tinyxml/tinyxml.h"
+	"../common/Common.h"
+	"../common/Message/Message.h"
+	"ClientCenter.h"
+
+1403164795 /home/chenxiaodong/workspace/test/github/UdpSocket/common/tinyxml/tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1305426297 /home/chenxiaodong/workspace/test/github/UdpSocket/common/tinyxml/tinystr.h
+	<assert.h>
+	<string.h>
+
+1405648473 /home/chenxiaodong/workspace/test/github/UdpSocket/common/Message/Message.h
+	<string>
+	"../tinyxml/tinyxml.h"
+	"../Common.h"
+
+1405664152 /home/chenxiaodong/workspace/test/github/UdpSocket/client/ClientCenter.h
+	<iostream>
+	<list>
+	"../common/Common.h"
+	"UdpClient.h"
+	"../common/Message/Message.h"
+
+1405668573 source:/home/chenxiaodong/workspace/test/github/UdpSocket/common/Message/Message.cpp
+	"Message.h"
+
+1403167070 source:/home/chenxiaodong/workspace/test/github/UdpSocket/common/MessageTag.cpp
+	<iostream>
+	"MessageTag.h"
+
+1404381502 /home/chenxiaodong/workspace/test/github/UdpSocket/common/MessageTag.h
+
+1403488114 source:/home/chenxiaodong/workspace/test/github/UdpSocket/common/helper.cpp
+
+1305426297 source:/home/chenxiaodong/workspace/test/github/UdpSocket/common/tinyxml/tinystr.cpp
+	"tinystr.h"
+
+1403164806 source:/home/chenxiaodong/workspace/test/github/UdpSocket/common/tinyxml/tinyxml.cpp
+	<ctype.h>
+	<sstream>
+	<iostream>
+	"tinyxml.h"
+
+1305426297 source:/home/chenxiaodong/workspace/test/github/UdpSocket/common/tinyxml/tinyxmlerror.cpp
+	"tinyxml.h"
+
+1305426297 source:/home/chenxiaodong/workspace/test/github/UdpSocket/common/tinyxml/tinyxmlparser.cpp
+	<ctype.h>
+	<stddef.h>
+	"tinyxml.h"
+	<windows.h>
+

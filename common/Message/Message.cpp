@@ -9,10 +9,6 @@ Message::~Message()
     {
         delete mXmlDoc;
     }
-    if(null != mRootElement && isElementNew)
-    {
-        delete mRootElement;
-    }
 }
 
 void Message::SetValue(const char* attr, const char* value)

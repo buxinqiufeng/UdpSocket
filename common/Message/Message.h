@@ -52,8 +52,11 @@ namespace MessageTag{
     const char * const Port = "Port";
     const char * const ErrorCode = "ErrorCode";
     const char * const Content = "Content";
+    const char * const Status = "Status";
 
     const string TypeLogin = "Login";
+    const string TypeSync = "Sync";
+    const string TypeSyncEnd = "SyncEnd";
     const string TypeChat = "Chat";
     const string TypeLogout = "Logout";
 }
